@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.titan.dao.mapper.XvgMapper" >
+  <resultMap id="BaseResultMap" type="com.titan.dao.bean.Xvg" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="price_btc" property="priceBtc" jdbcType="VARCHAR" />
+    <result column="price_rmb" property="priceRmb" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="BIGINT" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, price_btc, price_rmb, quantity, time, trade_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.titan.dao.bean.XvgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xvg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xvg
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xvg
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.titan.dao.bean.XvgExample" >
+    delete from xvg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.titan.dao.bean.Xvg" >
+    insert into xvg (id, price_btc, price_rmb, 
+      quantity, time, trade_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{priceBtc,jdbcType=VARCHAR}, #{priceRmb,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{tradeType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.titan.dao.bean.Xvg" >
+    insert into xvg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="priceBtc != null" >
+        price_btc,
+      </if>
+      <if test="priceRmb != null" >
+        price_rmb,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="priceBtc != null" >
+        #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="priceRmb != null" >
+        #{priceRmb,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.titan.dao.bean.XvgExample" resultType="java.lang.Integer" >
+    select count(*) from xvg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xvg
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceBtc != null" >
+        price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceRmb != null" >
+        price_rmb = #{record.priceRmb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null" >
+        quantity = #{record.quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=BIGINT},
+      </if>
+      <if test="record.tradeType != null" >
+        trade_type = #{record.tradeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xvg
+    set id = #{record.id,jdbcType=INTEGER},
+      price_btc = #{record.priceBtc,jdbcType=VARCHAR},
+      price_rmb = #{record.priceRmb,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=BIGINT},
+      trade_type = #{record.tradeType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.titan.dao.bean.Xvg" >
+    update xvg
+    <set >
+      <if test="priceBtc != null" >
+        price_btc = #{priceBtc,jdbcType=VARCHAR},
+      </if>
+      <if test="priceRmb != null" >
+        price_rmb = #{priceRmb,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.titan.dao.bean.Xvg" >
+    update xvg
+    set price_btc = #{priceBtc,jdbcType=VARCHAR},
+      price_rmb = #{priceRmb,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=VARCHAR},
+      time = #{time,jdbcType=BIGINT},
+      trade_type = #{tradeType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
